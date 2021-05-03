@@ -9,11 +9,16 @@ library(DT)
 library(ggplot2)
 
 #-------------------------------
+# Loading Data
+df <- read_xlsx("data/execsummary.xlsx")
 
 # Basic Layout
 
+
+
 ui <- navbarPage("Montgomery County Public Safety",
                  
+
                  # Style
                  tags$link(rel = "stylesheet", type = "text/css", href = "css/roboto.css"),
                  tags$style(paste0("
@@ -130,6 +135,8 @@ ui <- navbarPage("Montgomery County Public Safety",
                                    "
                  )),
                  
+                 
+                 
                  #-------------------------------
                  
                  
@@ -139,10 +146,25 @@ ui <- navbarPage("Montgomery County Public Safety",
                  div(style='margin-bottom:12px;margin-top:18px;',
                      img(src = "photos/countyseal.png",
                          style="margin-left: 2px; margin-top: 4px; margin-right:24px;margin-bottom:8px;float:left;" ,
+                         HTML('
+                <div id="google_translate_element"></div>
+                              <script>
+                              function googleTranslateElementInit() {
+                              new google.translate.TranslateElement({
+                              pageLanguage: \'en\', 
+                              includedLanguages: \'en,es,fr,jv,ko,pa,pt,ru,zh-CN,ar\', 
+                              layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false}, 
+                              \'google_translate_element\');
+                              }
+                              </script>
+                              <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+                              '
+                              ),
+                         
                          height = 130),
                      "Introduction about the RPS"),
                  
-                 
+                
                  
                  # Overview progress and day trackers 
                  div(style='padding:1px;max-width:900px;margin-top:24px;' ,
@@ -170,8 +192,9 @@ ui <- navbarPage("Montgomery County Public Safety",
                              
                              
                              
-                             tabPanel(h4(style="color:black;","RPS Reports Updated"),
-                                    HTML("This would be a place where will upload the PDF files of Rmarkdown Reports that can be downloaded")
+                             tabPanel(h4(style="color:black;","RPS Reports and Data"),
+                                    HTML("This would be a place where will upload the PDF files of Rmarkdown Reports that can be downloaded"),
+                                    dataTableOutput(outputId = "datasummary")
                              ),
                              
                              
@@ -262,7 +285,12 @@ server <- function(input, output)  {
            paste0("The RPS recomendations were implemented on Insert Date, And Todays Date is ",Sys.Date()
            )
     )
-  })  
+  })
+  
+  
+  output$datasummary <- DT::renderDataTable(DT::datatable(data = df, 
+                                                          options = list(pageLength = 10), 
+                                                          rownames = FALSE))
   
   
   
