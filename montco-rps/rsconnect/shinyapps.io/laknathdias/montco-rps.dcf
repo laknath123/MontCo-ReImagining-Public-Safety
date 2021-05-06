@@ -1,0 +1,12 @@
+name: montco-rps
+title: montco-rps
+username:
+account: laknathdias
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 4087406
+bundleId: 4563502
+url: https://laknathdias.shinyapps.io/montco-rps/
+when: 1620274268.20516
+asMultiple: FALSE
+asStatic: FALSE
